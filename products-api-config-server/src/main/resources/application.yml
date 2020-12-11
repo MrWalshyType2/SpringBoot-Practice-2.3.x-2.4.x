@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: config-server
+#  profiles:#    active:#    - native  cloud:    config:      server:        git:
+          # Git URI that contains properties
+          # Specify a local Git repository with the 'file:///c:/' absolute url          uri: https://github.com/MrWalshyType2/products-cloud-config
+          # path to properties from repo root
+#          search-paths:#          - configuration
+          clone-on-start: true
+          default-label: main
+          skip-ssl-validation: true
+
+logging:  level:    org:
+      springframework:
+        web: DEBUG
+    
+server:  port: 8888

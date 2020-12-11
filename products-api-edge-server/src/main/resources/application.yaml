@@ -1,0 +1,22 @@
+server:
+  port: 443
+  ssl:
+    key-store: keystore.p12
+    key-store-password: password
+    key-store-type: PKCS12
+    key-alias: tomcat
+  # Allow requests sent during shutdown to be processed
+  shutdown: GRACEFUL
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "20s"  application:    name: gateway  cloud:    gateway:      httpclient:        ssl:
+          # DO NOT USE IN PRODUCTION          use-insecure-trust-manager: true
+    
+eureka:
+  client:
+    region: region-1
+    service-url:
+      zone1: http://localhost:8761/eureka
+    availability-zones:
+      region-1: zone1

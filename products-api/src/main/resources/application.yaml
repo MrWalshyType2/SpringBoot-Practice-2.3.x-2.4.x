@@ -1,0 +1,2 @@
+spring:  application:    name: product-api  main:    lazy-initialization: false
+  profiles:    active:    - dev
