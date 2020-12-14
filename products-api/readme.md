@@ -7,3 +7,5 @@ keytool -genkey -alias tomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keyst
 
 # Swagger UI
 Access the Swagger UI at path: /swagger-ui/index.html#/
+
+View the raw JSON at path: /v2/api-docs
