@@ -14,7 +14,9 @@ public class SpringCloudConfig {
 					  .route("product-api", request -> 
 					  						request.path("/api/**").uri("lb://product-api"))
 					  .route("configclientreq", request ->
-							  					request.path("/config/message").uri("lb://product-api"))
+						  					request.path("/config/message").uri("lb://product-api"))
+					  .route("product-actuator", request ->
+							  				request.path("/actuator/**").uri("lb://product-api"))
 					  .build();
 	}
 }

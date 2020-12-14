@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConfigClientController {
 
-	@Value("${welcome.message}")
+	// https://www.baeldung.com/spring-value-defaults
+	@Value("${welcome.message:default value}")
 	private String welcomeMessage;
 	
 	@GetMapping("/config/message")

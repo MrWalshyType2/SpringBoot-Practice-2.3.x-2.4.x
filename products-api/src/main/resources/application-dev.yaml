@@ -10,7 +10,7 @@ server:
   # Allow requests sent during shutdown to be processed
   shutdown: GRACEFUL
 
-spring:  lifecycle:    timeout-per-shutdown-phase: "20s"
+spring:  lifecycle:    timeout-per-shutdown-phase: "20s"  cloud:    loadbalancer:      ribbon:        enabled: false
     
 eureka:  client:
     region: region-1    service-url:
@@ -18,4 +18,10 @@ eureka:  client:
     availability-zones:      region-1: zone1  instance:    prefer-ip-address: true
 
 # Actuator
-management:  server:    port: 9000
+management:#  server:#    port: 9000
+  endpoints:    web:      exposure:        include:
+          - health
+          - info
+          - env
+          - beans
+          - metrics      cors:        allowed-origins:        - https://localhost        allowed-methods:        - GET, POST
