@@ -24,6 +24,13 @@ import com.example.products.api.model.Product;
 import com.example.products.api.model.Products;
 import com.example.products.api.service.interfaces.ProductServiceInterface;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
+
+@Api(value = "Products Service Controller")
 @RestController
 @RequestMapping("/api/products")
 public class ProductServiceController {
@@ -31,6 +38,11 @@ public class ProductServiceController {
 	@Autowired
 	ProductServiceInterface productService;
 
+	@ApiOperation(value = "Get All Products", notes = "${ProductServiceController.getAllProducts}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully retrieved all products"),
+			@ApiResponse(code = 204, message = "No content available to retrieve")
+	})
 	@GetMapping
 	public ResponseEntity<?> getAll() {
 		try {
@@ -43,8 +55,15 @@ public class ProductServiceController {
 		}
 	}
 	
+	@ApiOperation(value = "Get Product by ID", notes = "${ProductServiceController.getProductById}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully retrieved product by ID"),
+			@ApiResponse(code = 404, message = "No product found with the given ID")
+	})
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable(value = "id", required = true) String id) {
+	public ResponseEntity<?> getById(@ApiParam(name = "Get Product By ID",
+											   value = "ID of the product to be retrieved") 
+									 @PathVariable(value = "id", required = true) String id) {
 		try {
 			Optional<Product> response = productService.getById(id);
 			Product responseData = response.get();
@@ -55,8 +74,15 @@ public class ProductServiceController {
 		}
 	}
 	
+	@ApiOperation(value = "Create Product", notes = "${ProductServiceController.createProduct}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully created product"),
+			@ApiResponse(code = 400, message = "Something went wrong creating the product")
+	})
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Product product) {
+	public ResponseEntity<?> create(@ApiParam(name = "Create Product",
+			   								  value = "Product details to be saved") 
+									@RequestBody Product product) {
 		try {
 			productService.create(product);
 			return new ResponseEntity<String>("Product created successfully!", HttpStatus.CREATED);
@@ -66,8 +92,19 @@ public class ProductServiceController {
 		
 	}
 	
+	@ApiOperation(value = "Update Product", notes = "${ProductServiceController.updateProduct}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully updated the product"),
+			@ApiResponse(code = 404, message = "No product available with the specified ID"),
+			@ApiResponse(code = 500, message = "Something went wrong on the server")
+	})
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody Product product) {
+	public ResponseEntity<?> update(@ApiParam(name = "Update Product",
+			   								  value = "ID of the product to be updated")
+									@PathVariable("id") String id,
+									@ApiParam(name = "Update Product",
+	   								  		  value = "Product details to be saved") 
+									@RequestBody Product product) {
 		try {
 			productService.update(id, product);
 			return new ResponseEntity<String>("Product updated successfully!", HttpStatus.OK);
@@ -78,8 +115,16 @@ public class ProductServiceController {
 		}
 	}
 	
+	@ApiOperation(value = "Delete Product", notes = "${ProductServiceController.deleteProduct}")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully retrieved all products"),
+			@ApiResponse(code = 404, message = "No content available to retrieve"),
+			@ApiResponse(code = 500, message = "Something went wrong on the server")
+	})
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") String id) {
+	public ResponseEntity<?> delete(@ApiParam(name = "Delete Product",
+				  							  value = "ID of the product to be deleted")
+									@PathVariable("id") String id) {
 		try {
 			productService.delete(id);
 			return new ResponseEntity<String>("Product deleted successfully!", HttpStatus.OK);

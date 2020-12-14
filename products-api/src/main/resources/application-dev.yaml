@@ -9,6 +9,14 @@ server:
 #    key-alias: tomcat
   # Allow requests sent during shutdown to be processed
   shutdown: GRACEFUL
+#  servlet:#    context-path: /products
+    
+ProductServiceController:
+  getAllProducts: Retrieves all products
+  getProductById: Retrieves the product with the associated ID
+  createProduct: Creates a product and persists in storage
+  updateProduct: Updates a products details
+  deleteProductById: Deletes a product by its ID
 
 spring:  lifecycle:    timeout-per-shutdown-phase: "20s"  cloud:    loadbalancer:      ribbon:        enabled: false
     
